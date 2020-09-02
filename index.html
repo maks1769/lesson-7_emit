@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    </head>
+    <body>
+        <div class="container" id="app">
+            <p>To parent: {{ content }}</p>
+            <input-item v-model="content"></input-item>
+        </div>
+
+        <script>
+            Vue.component('input-item', {
+                props: ['content'],
+                methods: {
+                    emitText(data) {
+                        this.$emit('input', data);
+                    },
+                },
+                template: `
+                    <label>
+                        From child:
+                        <input class="form-control" :value="content" placeholder="Enter smth" @input="emitText($event.target.value)">
+                    </label>
+                `
+            });
+
+            new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        content: '',
+                    }
+                },
+            });
+        </script>
+    </body>
+</html>
